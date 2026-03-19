@@ -1,55 +1,67 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>동적 링크 디자인</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f2f5;
-      padding: 50px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>동적 링크 디자인</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
 
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      gap: 15px;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+        }
 
-    a {
-      display: block;
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-      font-size:16px;
-    }
-  </style>
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 15px;
+        }
+
+        li {
+            padding: 12px;
+            border-bottom: 1px dashed #b8b8b8
+        }
+
+        a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 16px;
+        }
+    </style>
 </head>
+
 <body>
 
-  <ul id="link-list"></ul>
+    <ul id="link-list"></ul>
 
-  <script>
-    const items = [ 
-      { title: "텍스트_배열_순차변경" },
-      { title: "css_타이핑_애니" },
-      { title: "DOM_요소찾기" }, 
-    ];
+    <script>
+        const items = [
+            { title: "텍스트_배열_순차변경" },
+            { title: "css_타이핑_애니" },
+            { title: "DOM_요소찾기" },
+        ];
 
-    const listContainer = document.getElementById("link-list");
+        const listContainer = document.getElementById("link-list");
 
-    items.forEach(item => {
-      const li = document.createElement("li");
-      const a = document.createElement("a");
-      const trimmedTitle = item.title.trim(); // 앞뒤 공백 제거
-      a.textContent = trimmedTitle;
-      a.href = `./${trimmedTitle}.html`; // 링크 생성
-      li.appendChild(a);
-      listContainer.appendChild(li);
-    });
-  </script>
+        items.forEach(item => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            const trimmedTitle = item.title.trim(); // 앞뒤 공백 제거
+            a.textContent = trimmedTitle;
+            a.href = `./${trimmedTitle}.html`; // 링크 생성
+            li.appendChild(a);
+            listContainer.appendChild(li);
+        });
+    </script>
 
 </body>
+
 </html>
