@@ -29,24 +29,26 @@
     // 1. 데이터 배열
     const items = [
       { title: "홈", path: "/" },
-      { title: "텍스트_배열_순차변경", path: "./텍스트_배열_순차변경.html" },
-      { title: "css_타이핑_애니", path: "./css_타이핑_애니.html" },
-      { title: " DOM_요소찾기", path: "./DOM_요소찾기.html.html" },
+      { title: "텍스트_배열_순차변경" },
+      { title: "css_타이핑_애니" },
+      { title: " DOM_요소찾기"" },
      
     ];
 
-    // 2. HTML에 렌더링
+   // 2. HTML에 렌더링
     const menu = document.getElementById("menu");
 
     items.forEach(item => {
       const li = document.createElement("li");
       const a = document.createElement("a");
 
-      a.href = item.path;
+      // path가 없으면 title + '.html'로 자동 생성
+      a.href = item.path || `./${item.title}.html`;
       a.textContent = item.title;
 
       li.appendChild(a);
       menu.appendChild(li);
+    });
     });
   </script>
 
