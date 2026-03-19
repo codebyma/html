@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>메뉴 렌더링</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 8px 0;
+    }
+    a {
+      text-decoration: none;
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>메뉴</h1>
+  <ul id="menu"></ul>
+
+  <script>
+    // 1. 데이터 배열
+    const items = [
+      { title: "홈", path: "/" },
+      { title: "텍스트_배열_순차변경", path: "/텍스트_배열_순차변경.html" },
+    ];
+
+    // 2. HTML에 렌더링
+    const menu = document.getElementById("menu");
+
+    items.forEach(item => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+
+      a.href = item.path;
+      a.textContent = item.title;
+
+      li.appendChild(a);
+      menu.appendChild(li);
+    });
+  </script>
+
+</body>
+</html>
