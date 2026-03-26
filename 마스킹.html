@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마스킹</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        strong {
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>마스킹</h1>
+    <div id="samples"></div>
+
+    <script>
+        function maskStringAdvanced(input, visibleStart = 0, visibleEnd = 0, maskChar = '*', maskAll = false) {
+            const str = String(input);
+
+            // maskAll=true이면 숫자+영문+한글 모두 마스킹, 아니면 숫자만
+            const targetChars = maskAll ? str.replace(/[^a-zA-Z0-9가-힣]/g, '') : str.replace(/\D/g, '');
+            const totalTarget = targetChars.length;
+
+            if (visibleStart + visibleEnd >= totalTarget) return str;
+
+            let count = 0;
+            let endVisibleStart = totalTarget - visibleEnd;
+
+            return str.split('').map(char => {
+                const isTarget = maskAll ? /[a-zA-Z0-9가-힣]/.test(char) : /\d/.test(char);
+                if (isTarget) {
+                    count++;
+                    if (count <= visibleStart || count > endVisibleStart) {
+                        return char;
+                    } else {
+                        return maskChar;
+                    }
+                } else {
+                    return char;
+                }
+            }).join('');
+        }
+
+        // 샘플 데이터
+        const examples = [
+            '#010ABcd5*678',
+            '010-ABcd-5678',
+            '홍길동-010-1234'
+        ];
+
+        const samplesDiv = document.getElementById('samples');
+
+        examples.forEach(ex => {
+            const p = document.createElement('p');
+            p.innerHTML = `<strong>원본:</strong> ${ex} → <strong>숫자+문자 마스킹:</strong> ${maskStringAdvanced(ex, 2, 2, '*', true)}`;
+            samplesDiv.appendChild(p);
+        });
+    </script>
+</body>
+
+</html>

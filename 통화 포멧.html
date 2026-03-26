@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>통화 포맷</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .currency-sample {
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+
+        .up {
+            color: green;
+        }
+
+        .down {
+            color: red;
+        }
+
+        .same {
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>통화 포맷</h1>
+
+    <div id="samples"></div>
+
+    <script>
+        // 미리 정의된 아이콘 세트
+        const ICON_SETS = {
+            default: { up: '▲', down: '▼', same: '➔' },
+            emoji: { up: '🚀', down: '💀', same: '😐' },
+            arrows: { up: '⬆️', down: '⬇️', same: '➡️' }
+        };
+
+        function formatCurrency(amount, currencyCode = 'KRW', decimalPlaces = 0, previousAmount = null, icons) {
+            const currencyLocaleMap = { 'KRW': 'ko-KR', 'USD': 'en-US', 'EUR': 'de-DE', 'JPY': 'ja-JP' };
+            const currencySymbolMap = { 'KRW': '원', 'USD': '$', 'EUR': '€', 'JPY': '¥' };
+
+            const locale = currencyLocaleMap[currencyCode] || 'en-US';
+            const symbol = currencySymbolMap[currencyCode] || currencyCode;
+
+            const formattedNumber = new Intl.NumberFormat(locale, {
+                minimumFractionDigits: decimalPlaces,
+                maximumFractionDigits: decimalPlaces
+            }).format(amount);
+
+            const formattedCurrency = currencyCode === 'KRW' ? `${formattedNumber}${symbol}` : `${symbol}${formattedNumber}`;
+
+            let trendClass = '';
+            let trendIcon = '';
+
+            if (previousAmount !== null && icons) {
+                if (amount > previousAmount) { trendClass = 'up'; trendIcon = icons.up; }
+                else if (amount < previousAmount) { trendClass = 'down'; trendIcon = icons.down; }
+                else { trendClass = 'same'; trendIcon = icons.same; }
+            }
+
+            return `<span class="${trendClass}">${formattedCurrency}${trendIcon}</span>`;
+        }
+
+        // 샘플 데이터
+        const sampleData = [
+            { amount: 123456789, currency: 'KRW', decimal: 0, previous: 120000000, iconSet: 'emoji' },
+            { amount: 987654321.45, currency: 'USD', decimal: 2, previous: 1000000000, iconSet: 'arrows' },
+            { amount: 123456789.123, currency: 'EUR', decimal: 3, previous: 123456789, iconSet: 'default' }
+        ];
+
+        const container = document.getElementById('samples');
+
+        sampleData.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'currency-sample';
+            div.innerHTML = formatCurrency(item.amount, item.currency, item.decimal, item.previous, ICON_SETS[item.iconSet]);
+            container.appendChild(div);
+        });
+    </script>
+</body>
+
+</html>
