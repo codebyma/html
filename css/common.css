@@ -215,6 +215,8 @@ body {
     border-radius: 8px;
     font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
     line-height: 1;
+    color: #111;
+    font-weight: 500;
 }
 
 .guide__btn-wrap+.guide__btn-wrap {
